@@ -1,0 +1,58 @@
+﻿day01
+
+从0到1做vue项目具体流程
+1.创建gitHub仓库
+2.vue create xxx
+3.vue.config.js 清除规范报错
+4.jsconfig.json 通过@引入文件时有路径提示
+5.拆分public文件夹的html非路由组件,组装到components文件夹中的各自组件里
+6.拆分public文件夹的html路由组件,组装到views文件夹里的各自route里
+7.写router路由器
+8.写App组件
+9.写逻辑
+
+
+day02 上午
+
+10.解决路由器router的BUG,然后把routes里面的路由封装成组件引入
+11.先做Home中的全局组件,TypeNav文件夹放到外层components文件夹中
+12.再做Home路由组件中的局部组件,ListContalner文件夹放到Home文件夹中
+13.做非路由组件的流程:拆html拆css拆img到新建组件中,然后到Home中引入注册使用
+
+day02 下午
+
+14.新建ajax文件夹,放入Ajax.js引入axios, nprogress ,nprogress.css ,
+   暴露配置过基础路径和超时限制,请求器拦截器的axios实例化对象
+15.新建api文件夹,放入index.js引入Ajax
+   暴露返回参考接口文档写的配置项的Ajax函数,写min.js
+16.安装vuex然后,新建store文件夹,放入index.js,home.js,users.js,
+17.在需要与用户进行交互的组件中,在mounted调用methods中定义的xx方法
+   通过this,$store.dispatch('xx')发送给store文件夹中的对应子模块的action进行处理
+18.在store文件夹的子模块中,定义核心概念
+   action常量的值为一个对象
+   把发送过来的函数套上async,
+   函数里面await给引入api的解构出来的函数套上
+   如果Ajax的值中有code全等于200的参数
+   则把Ajax的data值提交给mutationse的函数context.commit('XXX',result.data)
+   mutationse常量的值为一个对象
+   收到action传来的Ajax的data数据
+   把接受到的数据赋值给state.categoryList = categoryList
+   然后把state,mutations,actions暴露出去
+20.在store文件夹中放入index.js中引入vue vuex 
+   注册Vue.use(Vuex)组件
+   定义核心概念
+   引入子模块
+   暴露 new Vuex.Store({ 定义核心的概念,modules:{ 子模块 }  }) 
+19.在与用户交互的组件中,
+   computed里的mapState拿到最新的state子模块数据值,数据映射渲染页面
+   ...mapState({ categoryList: state=>state.home.categoryList })
+20.在min.js 引入store,api,TypeNav注册store,全局注册TypeNav使用TypeNav 
+21.vue.config.js 加入配置代理 
+   devServer: {
+     proxy: {
+      "^/api": {
+        target: "http://182.92.128.115",
+       },
+     },
+    },
+22.在于用户的交互组件中,使用v-for遍历出categoryList的数据    
